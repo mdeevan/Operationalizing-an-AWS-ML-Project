@@ -38,7 +38,7 @@ _* Instance were since removed to save on recurring cost._
 ![Inference Endpoints](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/Endpoints%20Amazon%20SageMaker%20AI%20us-east-1.png)
 
 
-## EC2 Training
+## Step 2: EC2 Training
 
 A GPU equipped machines is better suited to train a CNN, which helps reduce the time to train. For this reason **g6.xlarge** was choosen. These are "Amazon EC2 G6 instances are designed to accelerate graphics-intensive applications and machine learning inference." (https://aws.amazon.com/ec2/instance-types/)
 They features
@@ -49,4 +49,27 @@ They features
 
 As a result the training completed in under 10 minutes, which took over 20 mins for ml.g6.large
 ![EC2 instance with g6.xlarge](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/Instances%20EC2%20us-east-1.png)
+
+
+
+## Step 3: Lambda Function
+
+
+![deployed lambda](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/Functions%20Lambda.png)
+
+![lambda function](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/lambda%20function-code.png)
+
+
+
+## Step 4: Security and testing
+
+lambda was granted invoke access to the specific endpoint, so it can call the inference endpoint. Access to AWS resources is denied by default and only the ones with explicit 'allow' can access the resources. so, it's pretty safe from invocation standpoint.
+
+![lambda test result](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/lambda%20result.png)
+
+![IAM policies](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/IAM%20Lambda%20udacity-course5-role-huip3qfy%20IAM%20Global.png)
+
+
+## Step 5: Concurrency and auto-scaling
+
 
