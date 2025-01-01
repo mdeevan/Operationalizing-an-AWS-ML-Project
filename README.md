@@ -72,4 +72,25 @@ lambda was granted invoke access to the specific endpoint, so it can call the in
 
 ## Step 5: Concurrency and auto-scaling
 
+**Concurrency**: 
+Its an configuration setting that defines the count of parallel invocation of the lambda function. By default there is only one instance of the lambda function unless additional instances are configured (see below). If the lambda invocation exceeds the execution time of the lambda, a performance degradation will be obsereved, as requests are queued for instance availability. Provisioning additional instances improves performance but also incur cost. One other aspect to consider regarding performance is cold-start. Lambda function execution environment lifecycle involves dowloading the code, starting execution environment, execution of initialization code and finally code execution. The environment stays warm for a little while once execution ends, in anticipation of future invocation before dying out. Getting ready to execute the code is termed as cold-start. Below are the ways to address cold-start.   
+Concurrency is of two types, reserved and provisioned.
+
+_Reserved concurrency_: Number of instances available to respond to the request. when there are more invocation then the instances, the invocations are queued and processed as instances frees up from previous execution
+_Provisioned concrrency_: Always-on, ready and warmed up instances to serve the request. There is a cost associated with it, since instances are always on.
+
+**auto-scaling**:
+auto-scaling applies to the end points and it is a means to increase the number of endpoints to provide improved performance as traffic increases. There is a cost associated with the endpoints, and depends on the EC2 instances used. The configuration allows to define the maximum number of endpoint instance count. Optionally, one can define the cool-down period for scale-in, scale-out to ensure that new instances are not created immediately when invocations are increased and are not reduce immediately as invocations are reduced. This helps as the setting up the endpoint and tearing down takes some amount of time.
+
+## STANDOUT SUGGESTIONS
+
+## MULTI INSTANCE TRAINING
+Model was successfully trained with two instances and deployed.
+
+## AWS API Gateway
+REST API was setup to invoke the lambda function.
+
+![AWS API Gateway](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/API%20Gateway%20-%20APIs.png)
+
+![successful invocation via API](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/API%20call%20from%20browser%20.png)
 
