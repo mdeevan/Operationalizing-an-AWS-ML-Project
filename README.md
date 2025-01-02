@@ -74,9 +74,11 @@ lambda was granted invoke access to the specific endpoint, so it can call the in
 
 **Concurrency**: 
 Its an configuration setting that defines the count of parallel invocation of the lambda function. By default there is only one instance of the lambda function unless additional instances are configured (see below). If the lambda invocation exceeds the execution time of the lambda, a performance degradation will be obsereved, as requests are queued for instance availability. Provisioning additional instances improves performance but also incur cost. One other aspect to consider regarding performance is cold-start. Lambda function execution environment lifecycle involves dowloading the code, starting execution environment, execution of initialization code and finally code execution. The environment stays warm for a little while once execution ends, in anticipation of future invocation before dying out. Getting ready to execute the code is termed as cold-start. Below are the ways to address cold-start.   
+
 Concurrency is of two types, reserved and provisioned.
 
 _Reserved concurrency_: Number of instances available to respond to the request. when there are more invocation then the instances, the invocations are queued and processed as instances frees up from previous execution
+
 _Provisioned concrrency_: Always-on, ready and warmed up instances to serve the request. There is a cost associated with it, since instances are always on.
 
 **auto-scaling**:
@@ -102,6 +104,7 @@ DDP training offers multiple options, I attempted
  
 
 DDP Training: https://sagemaker-examples.readthedocs.io/en/latest/training/distributed_training/pytorch/data_parallel/mnist/pytorch_smdataparallel_mnist_demo.html
+
 spot training: https://github.com/aws-samples/amazon-sagemaker-managed-spot-training/blob/main/pytorch_managed_spot_training_checkpointing/pytorch_managed_spot_training_checkpointing.ipynb
 
 
