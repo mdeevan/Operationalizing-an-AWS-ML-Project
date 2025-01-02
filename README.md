@@ -53,13 +53,13 @@ As a result the training completed in under 10 minutes, which took over 20 mins 
 
 
 ## Step 3: Lambda Function
-
+lambda was setup that invokes the endpoint for inferring image class.
 
 ![deployed lambda](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/Functions%20Lambda.png)
 
 ![lambda function](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/lambda%20function-code.png)
 
-
+![Lambda Monitor](https://github.com/mdeevan/Operationalizing-an-AWS-ML-Project/blob/master/screenshots/lambda%20monitor%20udacity-course5.png)
 
 ## Step 4: Security and testing
 
@@ -84,8 +84,32 @@ auto-scaling applies to the end points and it is a means to increase the number 
 
 ## STANDOUT SUGGESTIONS
 
+## Distributed training or distributed data parallel (DDP)
+Attempted DPP with **spot instance** training with following configuration. All attempts failed due to Account limitation on using the spot instances of P3, P2, Trn Spot Instances.
+
+_ResourceLimitExceeded: An error occurred (ResourceLimitExceeded) when calling the CreateTrainingJob operation: The 
+account-level service limit 'ml.trn1.2xlarge for spot training job usage' is 0 Instances, with current utilization 
+of 0 Instances and a request delta of 2 Instances. Please use AWS Service Quotas to request an increase for this 
+quota. If AWS Service Quotas is not available, contact AWS support to request an increase for this quota._
+
+_ClientError: An error occurred (AccessDeniedException) when calling the CreateTrainingJob operation: User: arn:aws:sts::xxxxxxxxxxxx:assumed-role/AmazonSageMaker-ExecutionRole-20241229T155658/SageMaker is not authorized to perform: sagemaker:CreateTrainingJob on resource: arn:aws:sagemaker:us-east-1:xxxxxxxxxxxx:training-job/dog-pytorch-DDP-2025-01-02-16-54-30-431 with an explicit deny in a service control policy_
+
+There are multiple modes available for DDP
+
+DDP training offers multiple options, I attempted
+1. Training using SMDataParallel Distributed Training Framework _distribution={"smdistributed": {"dataparallel": {"enabled": True}}},_ this required P3 Instances for training
+2. Training with Torch_distributed:  _distribution={"torch_distributed": {"enabled": True}    }_ This works on GPU enabled and I attempted it on TRN instances
+ 
+
+DDP Training: https://sagemaker-examples.readthedocs.io/en/latest/training/distributed_training/pytorch/data_parallel/mnist/pytorch_smdataparallel_mnist_demo.html
+spot training: https://github.com/aws-samples/amazon-sagemaker-managed-spot-training/blob/main/pytorch_managed_spot_training_checkpointing/pytorch_managed_spot_training_checkpointing.ipynb
+
+
+
+
 ## MULTI INSTANCE TRAINING
-Model was successfully trained with two instances and deployed.
+Model was successfully trained with two instances of **ml.g4dn.xlarge** and deployed.
+
 
 ## AWS API Gateway
 REST API was setup to invoke the lambda function.
