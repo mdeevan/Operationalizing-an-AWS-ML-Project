@@ -1,6 +1,5 @@
 # Operationalizing-an-AWS-ML-Project
-Operationalizing an AWS ML Project
-=======
+
 ## Project Summary
 
 Project comprises of following steps:  
